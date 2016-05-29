@@ -5,6 +5,7 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.view.MenuInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,15 +16,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
+import com.example.jonathan.decifraapp.layout.flCipher;
 import com.example.jonathan.decifraapp.layout.flHome;
 import com.example.jonathan.decifraapp.layout.flMyCiphers;
 import com.example.jonathan.decifraapp.layout.flSearch;
+import com.example.jonathan.decifraapp.utils.page;
 
 public class acMain extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private FragmentManager fmPrincipal = getFragmentManager();
+    private page _pages = page.getInstance(getFragmentManager());
+    private int actual_page = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,8 @@ public class acMain extends AppCompatActivity
             }
         });
 
+
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -50,6 +57,9 @@ public class acMain extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        actual_page = R.id.nav_home;
+        this._pages.setPageVisible(actual_page);
     }
 
     @Override
@@ -66,6 +76,8 @@ public class acMain extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.ac_main, menu);
+
+
         return true;
     }
 
@@ -77,36 +89,22 @@ public class acMain extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.ac_main_save_cipher) {
+            Toast.makeText(this, "Salvar", Toast.LENGTH_LONG).show();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private void setPageVisible(int page) {
-        FragmentTransaction ftPage = fmPrincipal.beginTransaction();
-
-        if (page == R.id.nav_home){
-            flHome _flhome = new flHome();
-            ftPage.replace(R.id.flPrincipal, _flhome);
-        }
-        else if (page == R.id.nav_my_ciphers) {
-            flMyCiphers _flmyciphers = new flMyCiphers();
-            ftPage.replace(R.id.flPrincipal, _flmyciphers);
-        }
-        else if (page == R.id.nav_search) {
-            flSearch _flsearch = new flSearch();
-            ftPage.replace(R.id.flPrincipal, _flsearch);
-        }
-        ftPage.commit();
-    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        this.setPageVisible(item.getItemId());
+
+        actual_page = item.getItemId();
+        this._pages.setPageVisible(actual_page);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

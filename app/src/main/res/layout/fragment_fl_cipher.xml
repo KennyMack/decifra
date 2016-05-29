@@ -1,0 +1,49 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/nav_cipher"
+    tools:context="com.example.jonathan.decifraapp.layout.flCipher">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/fl_cipher_lblTitleMusic"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:textSize="10pt"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="@string/fl_cipher_title" />
+
+        <TextView
+            android:id="@+id/fl_cipher_lblTitleArtist"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:text="@string/fl_cipher_title" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#818181"
+            android:id="@+id/vborder_bottom"/>
+        <ScrollView
+            android:id="@+id/fl_cipher_svMain"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            android:fillViewport="true"
+            >
+            <TextView
+                android:id="@+id/fl_cipher_lblTab"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingRight="20dp"
+                android:paddingLeft="20dp"
+                android:layout_weight="1.0"/>
+        </ScrollView>
+    </LinearLayout>
+</FrameLayout>

@@ -4,10 +4,46 @@
     android:layout_height="match_parent"
     tools:context="com.example.jonathan.decifraapp.layout.flSearch">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:background="@color/colorDialog"
+        android:visibility="invisible"
+        android:id="@+id/fl_search_vBackGround">
+    </View>
+    <ImageView
+        android:contentDescription="Aguarde Imagem"
+        android:src="@android:drawable/sym_def_app_icon"
+        android:layout_width="100dp"
+        android:layout_gravity="center"
+        android:layout_height="100dp"
+        android:id="@+id/fl_search_ivWaitIcon"
+        android:visibility="invisible"/>
+
+    <LinearLayout
+        android:id="@+id/fl_search_llPrincipal"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="visible">
+        <EditText
+            android:paddingTop="20dp"
+            android:inputType="textUri"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:id="@+id/fl_search_txtUrl"
+            android:hint="@string/fl_search_url"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:gravity="center"
+            android:text="@string/fl_search_search"
+            android:id="@+id/fl_search_btnSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
 
 </FrameLayout>

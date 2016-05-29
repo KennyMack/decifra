@@ -1,14 +1,20 @@
 <resources>
     <string name="app_name">DecifraApp</string>
+    <string name="app_title">DeCifra</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="action_save_cipher">Salvar Cifra</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_search">Buscar Cifras</string>
     <string name="menu_my_ciphers">Minhas Cifras</string>
+
+    <string name="fl_cipher_title">Nome Música</string>
+
+    <string name="fl_search_url">Digite a url</string>
+    <string name="fl_search_search">Search…</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
