@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -57,6 +60,8 @@ public class flSearch extends Fragment {
         this.llPrincipal = (LinearLayout) v.findViewById(R.id.fl_search_llPrincipal);
         this.btnSearch.setOnClickListener(this.btn_Search_Click);
         this._music = actual_music.getInstance();
+
+        setHasOptionsMenu(true);
 
         return v;
     }
@@ -111,6 +116,34 @@ public class flSearch extends Fragment {
 
 
         return ret.toLowerCase();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // TODO Add your menu entries here
+        inflater.inflate(R.menu.ac_main, menu);
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_home:
+                // Not implemented here
+                return false;
+            case R.id.nav_my_ciphers:
+                // Do Fragment menu item stuff here
+                return false;
+            case R.id.nav_cipher:
+                // Do Fragment menu item stuff here
+                return true;
+
+            default:
+                break;
+        }
+
+        return false;
     }
 
     private void goToCipher() {
