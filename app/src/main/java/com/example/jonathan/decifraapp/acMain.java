@@ -1,11 +1,8 @@
 package com.example.jonathan.decifraapp;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.view.MenuInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,10 +15,6 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import com.example.jonathan.decifraapp.layout.flCipher;
-import com.example.jonathan.decifraapp.layout.flHome;
-import com.example.jonathan.decifraapp.layout.flMyCiphers;
-import com.example.jonathan.decifraapp.layout.flSearch;
 import com.example.jonathan.decifraapp.utils.page;
 
 public class acMain extends AppCompatActivity
@@ -46,8 +39,6 @@ public class acMain extends AppCompatActivity
                         .setAction("Action", null).show();
             }
         });
-
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -75,8 +66,7 @@ public class acMain extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.ac_main, menu);
-
+        //getMenuInflater().inflate(R.menu.ac_main, menu);
 
         return true;
     }
