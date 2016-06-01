@@ -11,14 +11,13 @@
         android:visibility="invisible"
         android:id="@+id/fl_search_vBackGround">
     </View>
-    <ImageView
-        android:contentDescription="Aguarde Imagem"
-        android:src="@android:drawable/sym_def_app_icon"
-        android:layout_width="100dp"
-        android:layout_gravity="center"
-        android:layout_height="100dp"
+    <ProgressBar
         android:id="@+id/fl_search_ivWaitIcon"
-        android:visibility="invisible"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:layout_gravity="center"
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/fl_search_llPrincipal"
@@ -32,8 +31,18 @@
             android:inputType="textUri"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:id="@+id/fl_search_txtUrl"
-            android:hint="@string/fl_search_url"
+            android:id="@+id/fl_search_txtMusic"
+            android:hint="@string/fl_search_music"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:paddingTop="20dp"
+            android:inputType="textUri"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:id="@+id/fl_search_txtArtist"
+            android:hint="@string/fl_search_artist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -43,7 +52,15 @@
             android:id="@+id/fl_search_btnSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
     </LinearLayout>
+    <ListView
+        android:id="@+id/fl_search_lvSearchResult"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible">
+
+    </ListView>
 
 
 </FrameLayout>

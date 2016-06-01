@@ -31,7 +31,7 @@ public class flMyCiphers extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_fl_my_ciphers, container, false);
         lstDados = (ListView)v.findViewById(R.id.fl_my_ciphers_lvCiphers);
-        ArrayList<music> contMedicines = new ArrayList<music>();
+        ArrayList<music> contMusics = new ArrayList<music>();
         music md1 = new music();
         md1.set_id("1");
         md1.set_name("music 1");
@@ -47,11 +47,11 @@ public class flMyCiphers extends Fragment {
         md3.set_name("music 3");
         md3.set_artist("Artist 3");
 
-        contMedicines.add(md1);
-        contMedicines.add(md2);
-        contMedicines.add(md3);
+        contMusics.add(md1);
+        contMusics.add(md2);
+        contMusics.add(md3);
 
-        _lMusicItem = new lMusicItem(v.getContext(), R.layout.l_music_item, contMedicines);
+        _lMusicItem = new lMusicItem(v.getContext(), R.layout.l_music_item, contMusics);
 
         lstDados.setAdapter(_lMusicItem);
 

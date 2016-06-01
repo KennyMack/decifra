@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">DecifraApp</string>
     <string name="app_title">DeCifra</string>
+    <string name="app_URL">https://vast-atoll-81554.herokuapp.com/musics/</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -13,7 +14,8 @@
 
     <string name="fl_cipher_title">Nome Música</string>
 
-    <string name="fl_search_url">Digite a url</string>
+    <string name="fl_search_artist">Nome do Artista</string>
+    <string name="fl_search_music">Nome da Música</string>
     <string name="fl_search_search">Search…</string>
 
     <!-- TODO: Remove or change this placeholder text -->
