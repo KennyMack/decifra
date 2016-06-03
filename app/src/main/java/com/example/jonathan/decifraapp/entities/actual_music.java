@@ -4,17 +4,39 @@ package com.example.jonathan.decifraapp.entities;
  * Created by jonathan on 29/05/16.
  */
 public class actual_music {
+    private static actual_music _instance = null;
+
+    private String _id;
+    private String _type;
+    private String _name;
+    private String _artist;
+    private String _tab;
 
     private actual_music(){
 
     }
 
-    private static actual_music _instance = null;
     public static actual_music getInstance(){
         if (_instance == null){
             _instance = new actual_music();
         }
         return _instance;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
+
+    public String get_type() {
+        return _type;
+    }
+
+    public void set_type(String _type) {
+        this._type = _type;
     }
 
     public String get_name() {
@@ -41,7 +63,7 @@ public class actual_music {
         this._tab = _tab;
     }
 
-    private String _name;
-    private String _artist;
-    private String _tab;
+
+
+
 }

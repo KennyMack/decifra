@@ -5,15 +5,17 @@ package com.example.jonathan.decifraapp.entities;
  */
 public class music {
     private String _id;
+    private String _type;
     private String _name;
     private String _artist;
+    private String _tab;
 
-    public String get_tab() {
-        return _tab;
+    public String get_id() {
+        return _id;
     }
 
-    public void set_tab(String _tab) {
-        this._tab = _tab;
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public String get_artist() {
@@ -32,15 +34,19 @@ public class music {
         this._name = _name;
     }
 
-    public String get_id() {
-        return _id;
+    public String get_type() {
+        return _type;
     }
 
-    public void set_id(String _id) {
-        this._id = _id;
+    public void set_type(String _type) {
+        this._type = _type;
     }
 
-    private String _tab;
+    public String get_tab() {
+        return _tab;
+    }
 
-
+    public void set_tab(String _tab) {
+        this._tab = _tab;
+    }
 }

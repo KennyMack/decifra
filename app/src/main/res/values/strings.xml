@@ -18,6 +18,10 @@
     <string name="fl_search_music">Nome da Música</string>
     <string name="fl_search_search">Search…</string>
 
+    <string name="l_search_item_descguitar">Icone de guitarra</string>
+    <string name="l_search_item_descbass">Icone de baixo</string>
+    <string name="l_search_item_descacoustguitar">Icone de violão</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

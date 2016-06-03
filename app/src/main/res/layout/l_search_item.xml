@@ -7,35 +7,36 @@
     android:layout_marginBottom="16dp"
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
-    android:id="@+id/l_music_item_llmusicitem">
+    android:id="@+id/l_search_item_llsearchitem">
 
 
     <ImageView
-        android:contentDescription="icone de musica"
+        android:contentDescription="@string/l_search_item_descguitar"
         android:layout_width="0dp"
         android:layout_height="80dp"
         android:src="@android:drawable/sym_def_app_icon"
-        android:id="@+id/l_music_item_ivIcon"
+        android:id="@+id/l_search_item_ivIcon"
         android:layout_weight="1"
         />
 
     <LinearLayout
         android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <TextView
             android:textStyle="bold"
-            android:textSize="8pt"
+            android:textSize="7pt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/l_music_item_lblMusicName"
+            android:id="@+id/l_search_item_lblMusicName"
             android:layout_weight="1"
             android:text="Music"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/l_music_item_lblArtist"
+            android:id="@+id/l_search_item_lblArtist"
             android:layout_weight="1"
             android:text="artist"/>
     </LinearLayout>

@@ -14,12 +14,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -55,10 +57,9 @@ public class flSearch extends Fragment {
     private EditText txtArtist;
     private EditText txtMusic;
     private Button btnSearch;
-    private View vBackGround;
     private ProgressBar ivWaitIcon;
     private LinearLayout llPrincipal;
-    private lMusicItem _lMusicItem;
+    private lSearchItem _lSearchItem;
     private ListView lvSearchResult;
     private page _page = page.getInstance(null);
 
@@ -76,16 +77,46 @@ public class flSearch extends Fragment {
         this.txtMusic  = (EditText) v.findViewById(R.id.fl_search_txtMusic);
         this.btnSearch = (Button) v.findViewById(R.id.fl_search_btnSearch);
         this.ivWaitIcon = (ProgressBar) v.findViewById(R.id.fl_search_ivWaitIcon);
-        this.vBackGround = v.findViewById(R.id.fl_search_vBackGround);
         this.llPrincipal = (LinearLayout) v.findViewById(R.id.fl_search_llPrincipal);
         this.lvSearchResult = (ListView) v.findViewById(R.id.fl_search_lvSearchResult);
         this.btnSearch.setOnClickListener(this.btn_Search_Click);
         this._music = actual_music.getInstance();
 
+        this.lvSearchResult.setOnItemClickListener(lvSearchResult_itemClick);
+        this.lvSearchResult.setOnLongClickListener(lvSearchResult_LongItemClick);
         setHasOptionsMenu(true);
 
         return v;
     }
+
+    private AdapterView.OnItemClickListener lvSearchResult_itemClick = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            music _ms = (music) lvSearchResult.getItemAtPosition(position);
+
+            if (_ms != null) {
+
+                actual_music acMusic = actual_music.getInstance();
+                acMusic.set_artist(_ms.get_artist());
+                acMusic.set_name(_ms.get_name());
+                acMusic.set_tab(_ms.get_tab());
+                acMusic.set_id(_ms.get_id());
+                acMusic.set_type(_ms.get_artist());
+
+                goToCipher();
+            }
+        }
+    };
+
+
+    private View.OnLongClickListener lvSearchResult_LongItemClick = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View v) {
+
+            Toast.makeText(v.getContext(), "Salvar cifra", Toast.LENGTH_LONG).show();
+            return false;
+        }
+    };
 
     private View.OnClickListener btn_Search_Click = new View.OnClickListener() {
         @Override
@@ -99,8 +130,6 @@ public class flSearch extends Fragment {
 
             if ((!nameArtist.equals("")) || (!nameMusic.equals(""))) {
 
-                llPrincipal.setVisibility(View.INVISIBLE);
-                vBackGround.setVisibility(View.VISIBLE);
                 ivWaitIcon.setVisibility(View.VISIBLE);
 
                 if (nameArtist.equals("") && !nameMusic.equals("")) {
@@ -119,35 +148,6 @@ public class flSearch extends Fragment {
 
         }
     };
-
-    private String clearUrlCipher(String url){
-        String iniUrl = url.trim().substring(0, 4);
-        String ret = "";
-        if (iniUrl.toUpperCase().equals("WWW.")) {
-            ret = "http://" + url;
-        }
-        else if (!iniUrl.toUpperCase().equals("WWW.") &&
-                iniUrl.toUpperCase().equals("HTTP")) {
-            String urlIniHttp = url.substring(0, 11);
-
-            if (!urlIniHttp.toUpperCase().equals("HTTP://WWW.")) {
-                urlIniHttp = "http://www.";
-                ret = urlIniHttp + url.substring(7, url.length());
-            }
-            else
-                ret = url;
-        }
-        else if (!iniUrl.toUpperCase().equals("WWW.") &&
-                !iniUrl.toUpperCase().equals("HTTP")) {
-            ret = "http://www." + url;
-        }
-        else {
-            ret = url;
-        }
-
-
-        return ret.toLowerCase();
-    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -196,55 +196,59 @@ public class flSearch extends Fragment {
         @Override
         protected void onPostExecute(String result) {
 
+            JSONObject jsResponse;
+            try {
+                jsResponse = new JSONObject(result);
 
-            if (!result.equals("invalid")) {
-
-                try {
-                    JSONObject js = new JSONObject(result);
+                if (jsResponse.getBoolean("success") &&
+                    jsResponse.getJSONArray("data").length() > 0) {
 
                     ArrayList<music> contMusics = new ArrayList<music>();
 
-                    for (int i = 0; i < js.getJSONArray("data").length(); i++) {
+                    for (int i = 0; i < jsResponse.getJSONArray("data").length(); i++) {
 
-                        JSONObject jsItem = js.getJSONArray("data").getJSONObject(i);
+                        JSONObject jsItem = jsResponse.getJSONArray("data").getJSONObject(i);
                         music md = new music();
                         md.set_id(jsItem.getString("_id"));
                         md.set_name(jsItem.getString("name"));
                         md.set_artist(jsItem.getString("artist"));
-                        md.set_tab(jsItem.getJSONArray("music").toString());
-                        contMusics.add(md);
+
+                        for (int music = 0; music < jsItem.getJSONArray("music").length(); music++) {
+                            JSONObject jsItemMusic = jsItem.getJSONArray("music").getJSONObject(music);
+                            md.set_type(jsItemMusic.getString("type"));
+                            md.set_tab(jsItemMusic.getString("content"));
+                            contMusics.add(md);
+                        }
                     }
+                    _lSearchItem = new lSearchItem(v.getContext(), R.layout.l_search_item, contMusics);
 
-
-
-                    /*_music.set_tab(js.getJSONArray("data").get(0).toString());
-                    _music.set_artist("Randon");
-                    _music.set_name("Wat");*/
-
-
-                    _lMusicItem = new lMusicItem(v.getContext(), R.layout.l_music_item, contMusics);
-
-                    lvSearchResult.setAdapter(_lMusicItem);
+                    lvSearchResult.setAdapter(_lSearchItem);
 
                     lvSearchResult.setVisibility(View.VISIBLE);
-                    //llPrincipal.setVisibility(View.VISIBLE);
-                    vBackGround.setVisibility(View.INVISIBLE);
                     ivWaitIcon.setVisibility(View.INVISIBLE);
-                } catch (JSONException e) {
-                    _music.set_tab("Not found");
-                }
 
-                //goToCipher();
+                }
+                else {
+                    llPrincipal.setVisibility(View.VISIBLE);
+                    ivWaitIcon.setVisibility(View.INVISIBLE);
+                    Snackbar.make(v, "Nenhuma Cifra encontrada.", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
             }
-            else {
-                llPrincipal.setVisibility(View.VISIBLE);
-                vBackGround.setVisibility(View.INVISIBLE);
-                ivWaitIcon.setVisibility(View.INVISIBLE);
-                Snackbar.make(v, "Cifra não encontrada.", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            catch (JSONException e) {
+                Toast.makeText(v.getContext(), "Não foi possível carregar. Tente novament",
+                        Toast.LENGTH_LONG).show();
+            }
+            finally {
+                jsResponse = null;
             }
         }
     }
+
+
+
+
+
 
     private String downloadContent(String purl) throws IOException {
         InputStream is = null;

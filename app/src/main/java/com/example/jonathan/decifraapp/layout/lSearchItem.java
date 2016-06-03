@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,9 +16,9 @@ import com.example.jonathan.decifraapp.entities.music;
 import java.util.List;
 
 /**
- * Created by jonathan on 29/05/16.
+ * Created by jonathan on 02/06/16.
  */
-public class lMusicItem extends ArrayAdapter<music> {
+public class lSearchItem extends ArrayAdapter<music> {
     private static class ViewHolder {
         LinearLayout lblId;
         TextView lblNameMusic;
@@ -27,7 +28,7 @@ public class lMusicItem extends ArrayAdapter<music> {
 
     private LayoutInflater _liInflater;
 
-    public lMusicItem(Context context, int resource, List<music> objects){
+    public lSearchItem(Context context, int resource, List<music> objects){
         super(context, resource, objects);
     }
 
@@ -39,23 +40,22 @@ public class lMusicItem extends ArrayAdapter<music> {
 
         //if (convertView == null) {
 
-            viewHolder = new ViewHolder();
+        viewHolder = new ViewHolder();
 
-            _liInflater = LayoutInflater.from(getContext());
+        _liInflater = LayoutInflater.from(getContext());
 
-            convertView = _liInflater.inflate(R.layout.l_music_item, parent, false);
+        convertView = _liInflater.inflate(R.layout.l_search_item, parent, false);
 
-            viewHolder.lblId = (LinearLayout) convertView.findViewById(R.id.l_music_item_llmusicitem);
-            ((LinearLayout) convertView.findViewById(R.id.l_music_item_llmusicitem)).setOnLongClickListener(this.llmusicitem_LongClick);
-            viewHolder.lblNameMusic = (TextView) convertView.findViewById(R.id.l_music_item_lblMusicName);
-            viewHolder.lblNameArtist = (TextView) convertView.findViewById(R.id.l_music_item_lblArtist);
+        viewHolder.lblId = (LinearLayout) convertView.findViewById(R.id.l_search_item_llsearchitem);
+        viewHolder.lblNameMusic = (TextView) convertView.findViewById(R.id.l_search_item_lblMusicName);
+        viewHolder.lblNameArtist = (TextView) convertView.findViewById(R.id.l_search_item_lblArtist);
 
-            convertView.setTag(viewHolder);
+        convertView.setTag(viewHolder);
 
         /*} else {
 
             viewHolder = (ViewHolder) convertView.getTag();
-        }*/
+        }    */
 
         viewHolder.lblId.setTag(_music.get_id());
         viewHolder.lblNameMusic.setText(_music.get_name());
@@ -64,12 +64,4 @@ public class lMusicItem extends ArrayAdapter<music> {
         return convertView;
 
     }
-
-    private View.OnLongClickListener llmusicitem_LongClick = new View.OnLongClickListener() {
-        @Override
-        public boolean onLongClick(View v) {
-            Toast.makeText(v.getContext(), "Excluido", Toast.LENGTH_LONG).show();
-            return false;
-        }
-    };
 }
