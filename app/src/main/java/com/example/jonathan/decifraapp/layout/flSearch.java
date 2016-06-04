@@ -149,34 +149,6 @@ public class flSearch extends Fragment {
         }
     };
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // TODO Add your menu entries here
-        inflater.inflate(R.menu.ac_main, menu);
-
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.nav_home:
-                // Not implemented here
-                return false;
-            case R.id.nav_my_ciphers:
-                // Do Fragment menu item stuff here
-                return false;
-            case R.id.nav_cipher:
-                // Do Fragment menu item stuff here
-                return true;
-
-            default:
-                break;
-        }
-
-        return false;
-    }
-
     private void goToCipher() {
         _page.setPageVisible(R.id.nav_cipher);
     }
