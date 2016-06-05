@@ -61,14 +61,22 @@ public class flCipher extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.ac_main_save_cipher:
-                String result;
                 DatabaseController crud = new DatabaseController(v.getContext());
-                result = crud.insert(_music.get_id(),
-                                     _music.get_name(),
-                                     _music.get_artist(),
-                                     _music.get_tab(),
-                                     _music.get_type());
-                Toast.makeText(v.getContext(), result, Toast.LENGTH_LONG).show();
+
+                if (!crud.alreadyExists(_music.get_idApi())) {
+
+                    if (crud.insert(_music.get_idApi(),
+                                    _music.get_name(),
+                                    _music.get_artist(),
+                                    _music.get_tab(),
+                                    _music.get_type()))
+                        Toast.makeText(v.getContext(), "Salvo.", Toast.LENGTH_SHORT).show();
+                    else
+                        Toast.makeText(v.getContext(), "Problema ao salvar cifra.", Toast.LENGTH_SHORT).show();
+                }
+                else
+                    Toast.makeText(v.getContext(), "Cifra já salva.", Toast.LENGTH_SHORT).show();
+
                 return true;
             default:
                 break;

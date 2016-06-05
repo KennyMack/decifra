@@ -16,9 +16,10 @@ public class DatabaseController {
         createDb = new CreateDatabase(context);
     }
 
-    public String insert(String idApi, String name, String artist, String tab, String type){
+    public Boolean insert(String idApi, String name, String artist, String tab, String type){
+        Boolean result = true;
         ContentValues values;
-        long resultado;
+        long insertResult;
 
         db = createDb.getWritableDatabase();
         values = new ContentValues();
@@ -28,17 +29,25 @@ public class DatabaseController {
         values.put(createDb.getTAB(), tab);
         values.put(createDb.getTYPE(), type);
 
-        resultado = db.insert(createDb.getTABLE(), null, values);
-        db.close();
+        try {
+            insertResult = db.insert(createDb.getTABLE(), null, values);
 
-        if (resultado == -1)
-            return "Erro ao inserir registro";
-        else
-            return "Registro Inserido com sucesso";
+            if (insertResult == -1)
+                result = false;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            result = false;
+        }
+        finally {
+            db.close();
+        }
+
+        return result;
 
     }
 
-    public Cursor carregaDados(){
+    public Cursor loadCipher(){
         Cursor cursor;
         String[] campos =  {
                 createDb.getID(),
@@ -57,4 +66,41 @@ public class DatabaseController {
         db.close();
         return cursor;
     }
+
+    public Boolean alreadyExists(String idApi)
+    {
+        Boolean result;
+        String query = "Select * from " + createDb.getTABLE() +
+                       " where " + createDb.getIDAPI() + " = '" + idApi + "'";
+
+        Cursor cursor = createDb.getReadableDatabase().rawQuery(query, null);
+        if (cursor.getCount() <= 0)
+            result = false;
+        else
+            result = true;
+
+        cursor.close();
+
+        return result;
+    }
+
+    public Boolean deleteCipher(String id)
+    {
+        boolean result = true;
+        db = createDb.getWritableDatabase();
+        try {
+            db.delete(createDb.getTABLE(), createDb.getID() + " = " + id, null);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            result = false;
+        }
+        finally {
+            db.close();
+        }
+
+        return result;
+    }
+
+
 }

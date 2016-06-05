@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DecifraApp</string>
+    <string name="app_name">DeCifra</string>
     <string name="app_title">DeCifra</string>
     <string name="app_URL">https://vast-atoll-81554.herokuapp.com/musics/</string>
 
@@ -22,6 +22,10 @@
     <string name="l_search_item_descguitar">Icone de guitarra</string>
     <string name="l_search_item_descbass">Icone de baixo</string>
     <string name="l_search_item_descacoustguitar">Icone de violão</string>
+
+    <string name="l_music_item_descguitar">Icone de guitarra</string>
+    <string name="l_music_item_descbass">Icone de baixo</string>
+    <string name="l_music_item_descacoustguitar">Icone de violão</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

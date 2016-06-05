@@ -88,6 +88,7 @@ public class flSearch extends Fragment {
                 _music.set_name(_ms.get_name());
                 _music.set_tab(_ms.get_tab());
                 _music.set_id(_ms.get_id());
+                _music.set_idApi(_ms.get_idApi());
                 _music.set_type(_ms.get_type());
 
                 goToCipher();
@@ -100,7 +101,6 @@ public class flSearch extends Fragment {
         @Override
         public boolean onLongClick(View v) {
 
-            Toast.makeText(v.getContext(), "Salvar cifra", Toast.LENGTH_LONG).show();
             return false;
         }
     };
@@ -169,8 +169,7 @@ public class flSearch extends Fragment {
                         for (int music = 0; music < jsItem.getJSONArray("music").length(); music++) {
 
                             music md = new music();
-                            //TODO: Mudar para get_idAPi
-                            md.set_id(jsItem.getString("_id"));
+                            md.set_idApi(jsItem.getString("_id"));
                             md.set_name(jsItem.getString("name"));
                             md.set_artist(jsItem.getString("artist"));
 
