@@ -1,7 +1,6 @@
 package com.example.jonathan.decifraapp.layout;
 
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -12,17 +11,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.jonathan.decifraapp.R;
 import com.example.jonathan.decifraapp.entities.actual_music;
+import com.example.jonathan.decifraapp.entities.actual_search;
 import com.example.jonathan.decifraapp.entities.music;
 import com.example.jonathan.decifraapp.utils.page;
 
@@ -37,23 +33,22 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-
 /**
  * A simple {@link Fragment} subclass.
  */
-public class flSearch extends Fragment {
-
+public class flResult extends Fragment {
     private actual_music _music;
+    private actual_search _actual_search;
     private View v = null;
-    private EditText txtArtist;
-    private EditText txtMusic;
     private ProgressBar ivWaitIcon;
-    private LinearLayout llPrincipal;
     private ListView lvSearchResult;
     private page _page = page.getInstance(null);
+    private lSearchItem _lSearchItem;
 
-    public flSearch() {
+    public flResult() {
         // Required empty public constructor
+        this._actual_search = actual_search.getInstance();
+        this._music = actual_music.getInstance();
     }
 
 
@@ -61,80 +56,21 @@ public class flSearch extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        v = inflater.inflate(R.layout.fragment_fl_search, container, false);
-        this.txtArtist = (EditText) v.findViewById(R.id.fl_search_txtArtist);
-        this.txtMusic  = (EditText) v.findViewById(R.id.fl_search_txtMusic);
-        Button btnSearch = (Button) v.findViewById(R.id.fl_search_btnSearch);
-        this.ivWaitIcon = (ProgressBar) v.findViewById(R.id.fl_search_ivWaitIcon);
-        this.llPrincipal = (LinearLayout) v.findViewById(R.id.fl_search_llPrincipal);
-        this.lvSearchResult = (ListView) v.findViewById(R.id.fl_search_lvSearchResult);
-        btnSearch.setOnClickListener(this.btn_Search_Click);
-        this._music = actual_music.getInstance();
+        v =inflater.inflate(R.layout.fragment_fl_result, container, false);
+        setHasOptionsMenu(true);
+
+        this.ivWaitIcon = (ProgressBar) v.findViewById(R.id.fl_result_ivWaitIcon);
+        this.lvSearchResult = (ListView) v.findViewById(R.id.fl_result_lvSearchResult);
 
         this.lvSearchResult.setOnItemClickListener(lvSearchResult_itemClick);
         this.lvSearchResult.setOnLongClickListener(lvSearchResult_LongItemClick);
-        setHasOptionsMenu(true);
+
+        ivWaitIcon.setVisibility(View.VISIBLE);
+
+        new DownloadTask().execute(getString(R.string.app_URL) + "all/artist/" + this._actual_search.get_searchText() + "/music/" + this._actual_search.get_searchText());
 
         return v;
     }
-
-    private AdapterView.OnItemClickListener lvSearchResult_itemClick = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            music _ms = (music) lvSearchResult.getItemAtPosition(position);
-
-            if (_ms != null) {
-                _music.set_artist(_ms.get_artist());
-                _music.set_name(_ms.get_name());
-                _music.set_tab(_ms.get_tab());
-                _music.set_id(_ms.get_id());
-                _music.set_type(_ms.get_type());
-
-                goToCipher();
-            }
-        }
-    };
-
-
-    private View.OnLongClickListener lvSearchResult_LongItemClick = new View.OnLongClickListener() {
-        @Override
-        public boolean onLongClick(View v) {
-
-            Toast.makeText(v.getContext(), "Salvar cifra", Toast.LENGTH_LONG).show();
-            return false;
-        }
-    };
-
-    private View.OnClickListener btn_Search_Click = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
-            InputMethodManager imm = (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-
-            String nameArtist = txtArtist.getText().toString();
-            String nameMusic = txtMusic.getText().toString();
-
-            if ((!nameArtist.equals("")) || (!nameMusic.equals(""))) {
-
-                ivWaitIcon.setVisibility(View.VISIBLE);
-
-                if (nameArtist.equals("") && !nameMusic.equals("")) {
-                    new DownloadTask().execute(getString(R.string.app_URL) + "music/" + nameMusic);
-                }
-                else if (!nameArtist.equals("") && nameMusic.equals("")){
-                    new DownloadTask().execute(getString(R.string.app_URL) + "artist/" + nameArtist);
-                }
-                else if (!nameArtist.equals("") && !nameMusic.equals("")){
-                    new DownloadTask().execute(getString(R.string.app_URL) + "artist/" + nameArtist + "/music/" + nameMusic);
-                }
-            }
-            else
-                Snackbar.make(v, "Digite uma música ou artista.", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
-        }
-    };
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -156,6 +92,9 @@ public class flSearch extends Fragment {
             case R.id.nav_cipher:
                 // Do Fragment menu item stuff here
                 return true;
+            case R.id.nav_result:
+                // Do Fragment menu item stuff here
+                return false;
 
             default:
                 break;
@@ -163,6 +102,32 @@ public class flSearch extends Fragment {
 
         return false;
     }
+
+    private AdapterView.OnItemClickListener lvSearchResult_itemClick = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            music _ms = (music) lvSearchResult.getItemAtPosition(position);
+
+            if (_ms != null) {
+                _music.set_artist(_ms.get_artist());
+                _music.set_name(_ms.get_name());
+                _music.set_tab(_ms.get_tab());
+                _music.set_id(_ms.get_id());
+                _music.set_type(_ms.get_type());
+
+                goToCipher();
+            }
+        }
+    };
+
+    private View.OnLongClickListener lvSearchResult_LongItemClick = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View v) {
+
+            Toast.makeText(v.getContext(), "Salvar cifra", Toast.LENGTH_LONG).show();
+            return false;
+        }
+    };
 
     private void goToCipher() {
         _page.setPageVisible(R.id.nav_cipher);
@@ -183,13 +148,14 @@ public class flSearch extends Fragment {
         @Override
         protected void onPostExecute(String result) {
 
+            JSONObject jsResponse;
             try {
-                JSONObject jsResponse = new JSONObject(result);
+                jsResponse = new JSONObject(result);
 
                 if (jsResponse.getBoolean("success") &&
-                    jsResponse.getJSONArray("data").length() > 0) {
+                        jsResponse.getJSONArray("data").length() > 0) {
 
-                    ArrayList<music> contMusics = new ArrayList<>();
+                    ArrayList<music> contMusics = new ArrayList<music>();
 
                     for (int i = 0; i < jsResponse.getJSONArray("data").length(); i++) {
                         JSONObject jsItem = jsResponse.getJSONArray("data").getJSONObject(i);
@@ -215,7 +181,7 @@ public class flSearch extends Fragment {
                             contMusics.add(md);
                         }
                     }
-                    lSearchItem _lSearchItem = new lSearchItem(v.getContext(), R.layout.l_search_item, contMusics);
+                    _lSearchItem = new lSearchItem(v.getContext(), R.layout.l_search_item, contMusics);
 
                     lvSearchResult.setAdapter(_lSearchItem);
 
@@ -233,8 +199,8 @@ public class flSearch extends Fragment {
                         Toast.LENGTH_LONG).show();
             }
             finally {
-                llPrincipal.setVisibility(View.VISIBLE);
                 ivWaitIcon.setVisibility(View.INVISIBLE);
+                jsResponse = null;
             }
         }
     }
@@ -271,8 +237,7 @@ public class flSearch extends Fragment {
         String line;
         try {
             while ((line = reader.readLine()) != null) {
-                sb.append(line);
-                sb.append("\n");
+                sb.append((line + "\n"));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -285,4 +250,5 @@ public class flSearch extends Fragment {
         }
         return sb.toString();
     }
+
 }

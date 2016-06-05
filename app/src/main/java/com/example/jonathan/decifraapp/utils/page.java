@@ -8,6 +8,7 @@ import com.example.jonathan.decifraapp.R;
 import com.example.jonathan.decifraapp.layout.flCipher;
 import com.example.jonathan.decifraapp.layout.flHome;
 import com.example.jonathan.decifraapp.layout.flMyCiphers;
+import com.example.jonathan.decifraapp.layout.flResult;
 import com.example.jonathan.decifraapp.layout.flSearch;
 
 /**
@@ -53,6 +54,12 @@ public class page {
         else if (page == R.id.nav_cipher) {
             flCipher _flcipher = new flCipher();
             ftPage.replace(R.id.flPrincipal, _flcipher);
+            //ftPage.add(_flcipher, "Cipher");
+            //ftPage.addToBackStack("Cipher");
+        }
+        else if (page == R.id.nav_result) {
+            flResult _flResult = new flResult();
+            ftPage.replace(R.id.flPrincipal, _flResult);
             //ftPage.add(_flcipher, "Cipher");
             //ftPage.addToBackStack("Cipher");
         }

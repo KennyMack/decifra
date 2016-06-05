@@ -5,6 +5,7 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_search">Buscar…</string>
 
     <string name="action_save_cipher">Salvar Cifra</string>
 
@@ -16,7 +17,7 @@
 
     <string name="fl_search_artist">Nome do Artista</string>
     <string name="fl_search_music">Nome da Música</string>
-    <string name="fl_search_search">Search…</string>
+    <string name="fl_search_search">Buscar…</string>
 
     <string name="l_search_item_descguitar">Icone de guitarra</string>
     <string name="l_search_item_descbass">Icone de baixo</string>

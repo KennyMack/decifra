@@ -1,0 +1,23 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/nav_result"
+    tools:context="com.example.jonathan.decifraapp.layout.flResult">
+
+    <ProgressBar
+        android:id="@+id/fl_result_ivWaitIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:layout_gravity="center"
+        android:visibility="invisible" />
+    <ListView
+        android:id="@+id/fl_result_lvSearchResult"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible">
+
+    </ListView>
+
+</FrameLayout>
