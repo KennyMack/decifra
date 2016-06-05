@@ -120,8 +120,8 @@ public class acMain extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.ac_main_save_cipher) {
-            Toast.makeText(this, "Salvar", Toast.LENGTH_LONG).show();
-            return true;
+            //Toast.makeText(this, "Salvar", Toast.LENGTH_LONG).show();
+            return false;
         }
 
         return super.onOptionsItemSelected(item);

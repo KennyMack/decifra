@@ -4,7 +4,9 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,7 +24,6 @@ public class lMusicItem extends ArrayAdapter<music> {
         LinearLayout lblId;
         TextView lblNameMusic;
         TextView lblNameArtist;
-
     }
 
     private LayoutInflater _liInflater;
@@ -46,7 +47,6 @@ public class lMusicItem extends ArrayAdapter<music> {
             convertView = _liInflater.inflate(R.layout.l_music_item, parent, false);
 
             viewHolder.lblId = (LinearLayout) convertView.findViewById(R.id.l_music_item_llmusicitem);
-            ((LinearLayout) convertView.findViewById(R.id.l_music_item_llmusicitem)).setOnLongClickListener(this.llmusicitem_LongClick);
             viewHolder.lblNameMusic = (TextView) convertView.findViewById(R.id.l_music_item_lblMusicName);
             viewHolder.lblNameArtist = (TextView) convertView.findViewById(R.id.l_music_item_lblArtist);
 
@@ -61,15 +61,9 @@ public class lMusicItem extends ArrayAdapter<music> {
         viewHolder.lblNameMusic.setText(_music.get_name());
         viewHolder.lblNameArtist.setText(_music.get_artist());
 
+
         return convertView;
 
     }
 
-    private View.OnLongClickListener llmusicitem_LongClick = new View.OnLongClickListener() {
-        @Override
-        public boolean onLongClick(View v) {
-            Toast.makeText(v.getContext(), "Excluido", Toast.LENGTH_LONG).show();
-            return false;
-        }
-    };
 }

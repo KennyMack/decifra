@@ -4,11 +4,16 @@ package com.example.jonathan.decifraapp.layout;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.jonathan.decifraapp.R;
+import com.example.jonathan.decifraapp.entities.DatabaseController;
 import com.example.jonathan.decifraapp.entities.actual_music;
 
 /**
@@ -20,6 +25,7 @@ public class flCipher extends Fragment {
     private TextView lblTitleMusic;
     private TextView lblTitleArtist;
     private TextView lblTab;
+    private View v;
 
     public flCipher() {
         // Required empty public constructor
@@ -30,7 +36,7 @@ public class flCipher extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_fl_cipher, container, false);
+        v = inflater.inflate(R.layout.fragment_fl_cipher, container, false);
         lblTitleMusic = (TextView) v.findViewById(R.id.fl_cipher_lblTitleMusic);
         lblTitleArtist = (TextView) v.findViewById(R.id.fl_cipher_lblTitleArtist);
         lblTab = (TextView) v.findViewById(R.id.fl_cipher_lblTab);
@@ -39,7 +45,37 @@ public class flCipher extends Fragment {
         lblTitleArtist.setText(this._music.get_artist());
         lblTab.setText(this._music.get_tab());
 
+        setHasOptionsMenu(true);
+
         return v;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.ac_main, menu);
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.ac_main_save_cipher:
+                String result;
+                DatabaseController crud = new DatabaseController(v.getContext());
+                result = crud.insert(_music.get_id(),
+                                     _music.get_name(),
+                                     _music.get_artist(),
+                                     _music.get_tab(),
+                                     _music.get_type());
+                Toast.makeText(v.getContext(), result, Toast.LENGTH_LONG).show();
+                return true;
+            default:
+                break;
+        }
+
+        super.onOptionsItemSelected(item);
+        return false;
     }
 
 }
