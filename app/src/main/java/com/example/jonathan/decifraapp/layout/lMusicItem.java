@@ -4,12 +4,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.jonathan.decifraapp.R;
 import com.example.jonathan.decifraapp.entities.music;
@@ -26,11 +24,10 @@ public class lMusicItem extends ArrayAdapter<music> {
         TextView lblNameArtist;
         ImageView ivIconType;
     }
-
-    private LayoutInflater _liInflater;
-
+    Context v;
     public lMusicItem(Context context, int resource, List<music> objects){
         super(context, resource, objects);
+        v = context;
     }
 
     @Override
@@ -42,7 +39,7 @@ public class lMusicItem extends ArrayAdapter<music> {
 
         viewHolder = new ViewHolder();
 
-        _liInflater = LayoutInflater.from(getContext());
+        LayoutInflater _liInflater = LayoutInflater.from(getContext());
 
         convertView = _liInflater.inflate(R.layout.l_music_item, parent, false);
 
@@ -61,12 +58,15 @@ public class lMusicItem extends ArrayAdapter<music> {
         {
             case "acousticguitar":
                 viewHolder.ivIconType.setImageResource(R.mipmap.ic_acoustic_guitar);
+                viewHolder.ivIconType.setContentDescription(v.getString(R.string.l_music_item_descacoustguitar));
                 break;
             case "bass":
                 viewHolder.ivIconType.setImageResource(R.mipmap.ic_bass);
+                viewHolder.ivIconType.setContentDescription(v.getString(R.string.l_music_item_descbass));
                 break;
             case "guitar":
                 viewHolder.ivIconType.setImageResource(R.mipmap.ic_guitar);
+                viewHolder.ivIconType.setContentDescription(v.getString(R.string.l_music_item_descguitar));
                 break;
         }
 

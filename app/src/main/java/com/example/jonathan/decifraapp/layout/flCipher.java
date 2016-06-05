@@ -22,9 +22,6 @@ import com.example.jonathan.decifraapp.entities.actual_music;
 public class flCipher extends Fragment {
 
     private actual_music _music;
-    private TextView lblTitleMusic;
-    private TextView lblTitleArtist;
-    private TextView lblTab;
     private View v;
 
     public flCipher() {
@@ -37,9 +34,9 @@ public class flCipher extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_fl_cipher, container, false);
-        lblTitleMusic = (TextView) v.findViewById(R.id.fl_cipher_lblTitleMusic);
-        lblTitleArtist = (TextView) v.findViewById(R.id.fl_cipher_lblTitleArtist);
-        lblTab = (TextView) v.findViewById(R.id.fl_cipher_lblTab);
+        TextView lblTitleMusic = (TextView) v.findViewById(R.id.fl_cipher_lblTitleMusic);
+        TextView lblTitleArtist = (TextView) v.findViewById(R.id.fl_cipher_lblTitleArtist);
+        TextView lblTab = (TextView) v.findViewById(R.id.fl_cipher_lblTab);
 
         lblTitleMusic.setText(this._music.get_name());
         lblTitleArtist.setText(this._music.get_artist());
@@ -70,12 +67,12 @@ public class flCipher extends Fragment {
                                     _music.get_artist(),
                                     _music.get_tab(),
                                     _music.get_type()))
-                        Toast.makeText(v.getContext(), "Salvo.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(v.getContext(), "Salvo", Toast.LENGTH_SHORT).show();
                     else
-                        Toast.makeText(v.getContext(), "Problema ao salvar cifra.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(v.getContext(), "Problema ao salvar cifra", Toast.LENGTH_SHORT).show();
                 }
                 else
-                    Toast.makeText(v.getContext(), "Cifra já salva.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), "Cifra já salva", Toast.LENGTH_SHORT).show();
 
                 return true;
             default:

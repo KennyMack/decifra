@@ -4,34 +4,28 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.jonathan.decifraapp.R;
 import com.example.jonathan.decifraapp.entities.music;
 
 import java.util.List;
 
-/**
- * Created by jonathan on 02/06/16.
- */
 public class lSearchItem extends ArrayAdapter<music> {
     private static class ViewHolder {
         LinearLayout lblId;
         TextView lblNameMusic;
         TextView lblNameArtist;
         ImageView ivIconType;
-
     }
-
-    private LayoutInflater _liInflater;
+    Context v;
 
     public lSearchItem(Context context, int resource, List<music> objects){
         super(context, resource, objects);
+        v = context;
     }
 
     @Override
@@ -44,7 +38,7 @@ public class lSearchItem extends ArrayAdapter<music> {
 
         viewHolder = new ViewHolder();
 
-        _liInflater = LayoutInflater.from(getContext());
+        LayoutInflater _liInflater = LayoutInflater.from(getContext());
 
         convertView = _liInflater.inflate(R.layout.l_search_item, parent, false);
 
@@ -55,10 +49,10 @@ public class lSearchItem extends ArrayAdapter<music> {
 
         convertView.setTag(viewHolder);
 
-        /*} else {
+        //} else {
 
-            viewHolder = (ViewHolder) convertView.getTag();
-        }    */
+        //viewHolder = (ViewHolder) convertView.getTag();
+        //}
 
         viewHolder.lblId.setTag(_music.get_id());
         viewHolder.lblNameMusic.setText(_music.get_name());
@@ -68,15 +62,17 @@ public class lSearchItem extends ArrayAdapter<music> {
         {
             case "acousticguitar":
                 viewHolder.ivIconType.setImageResource(R.mipmap.ic_acoustic_guitar);
+                viewHolder.ivIconType.setContentDescription(v.getString(R.string.l_search_item_descacoustguitar));
                 break;
             case "bass":
                 viewHolder.ivIconType.setImageResource(R.mipmap.ic_bass);
+                viewHolder.ivIconType.setContentDescription(v.getString(R.string.l_search_item_descbass));
                 break;
             case "guitar":
                 viewHolder.ivIconType.setImageResource(R.mipmap.ic_guitar);
+                viewHolder.ivIconType.setContentDescription(v.getString(R.string.l_search_item_descguitar));
                 break;
         }
-
 
 
         return convertView;

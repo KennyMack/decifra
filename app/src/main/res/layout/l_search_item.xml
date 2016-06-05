@@ -11,12 +11,10 @@
 
 
     <ImageView
-        android:contentDescription="@string/l_search_item_descguitar"
         android:layout_width="0dp"
         android:layout_height="80dp"
         android:id="@+id/l_search_item_ivIcon"
-        android:layout_weight="1"
-        />
+        android:layout_weight="1"/>
 
     <LinearLayout
         android:paddingLeft="20dp"
@@ -30,13 +28,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/l_search_item_lblMusicName"
-            android:layout_weight="1"
-            android:text="Music"/>
+            android:layout_weight="1"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/l_search_item_lblArtist"
-            android:layout_weight="1"
-            android:text="artist"/>
+            android:layout_weight="1"/>
     </LinearLayout>
 </LinearLayout>

@@ -2,6 +2,8 @@ package com.example.jonathan.decifraapp.utils;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 
 import com.example.jonathan.decifraapp.R;
@@ -65,6 +67,7 @@ public class page {
         }
         //ftPage.commit();
         ftPage.commitAllowingStateLoss();
+
     }
 
 }

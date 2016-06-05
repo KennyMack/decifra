@@ -4,6 +4,7 @@ package com.example.jonathan.decifraapp.layout;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.jonathan.decifraapp.R;
-import com.example.jonathan.decifraapp.entities.CreateDatabase;
 import com.example.jonathan.decifraapp.entities.DatabaseController;
 import com.example.jonathan.decifraapp.entities.actual_music;
 import com.example.jonathan.decifraapp.entities.music;
@@ -26,6 +26,7 @@ import java.util.ArrayList;
 public class flMyCiphers extends Fragment {
     private lMusicItem _lMusicItem;
     private ListView lstDados;
+    private View v;
     private page _page = page.getInstance(null);
 
     public flMyCiphers() {
@@ -36,16 +37,17 @@ public class flMyCiphers extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_fl_my_ciphers, container, false);
+        v = inflater.inflate(R.layout.fragment_fl_my_ciphers, container, false);
 
-        CreateDatabase createDb = new CreateDatabase(v.getContext());
         DatabaseController db = new DatabaseController(v.getContext());
         Cursor cur = db.loadCipher();
 
         lstDados = (ListView)v.findViewById(R.id.fl_my_ciphers_lvCiphers);
         lstDados.setOnItemClickListener(lvMyCiphers_itemClick);
-        ArrayList<music> contMusics = new ArrayList<music>();
+        ArrayList<music> contMusics = new ArrayList<>();
+        boolean found = false;
         while (cur.moveToNext()) {
+            found = true;
             music novo = new music();
             novo.set_id(cur.getString(0));
             novo.set_idApi(cur.getString(1));
@@ -55,9 +57,14 @@ public class flMyCiphers extends Fragment {
             novo.set_type(cur.getString(5));
             contMusics.add(novo);
         }
+
         _lMusicItem = new lMusicItem(v.getContext(), R.layout.l_music_item, contMusics);
         lstDados.setOnItemLongClickListener(llmusicitem_LongClick);
         lstDados.setAdapter(_lMusicItem);
+
+        if (!found)
+            Snackbar.make(v, "Nenhuma cifra salva", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
 
         return v;
     }
@@ -69,11 +76,11 @@ public class flMyCiphers extends Fragment {
             DatabaseController dbCtrl = new DatabaseController(view.getContext());
             music _ms = (music) lstDados.getItemAtPosition(position);
             if (dbCtrl.deleteCipher(_ms.get_id())) {
-                Toast.makeText(getView().getContext(), "Excluido.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(v.getContext(), "Excluido", Toast.LENGTH_SHORT).show();
                 _lMusicItem.remove(_ms);
             }
             else
-                Toast.makeText(getView().getContext(), "Problema ao excluir cifra.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(v.getContext(), "Problema ao excluir cifra", Toast.LENGTH_SHORT).show();
 
             return false;
         }

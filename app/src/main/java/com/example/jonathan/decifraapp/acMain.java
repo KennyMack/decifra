@@ -14,7 +14,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
 
 import com.example.jonathan.decifraapp.entities.actual_search;
 import com.example.jonathan.decifraapp.utils.page;
@@ -66,7 +65,6 @@ public class acMain extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.ac_main, menu);
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.ac_main_search, menu);
 
@@ -74,42 +72,36 @@ public class acMain extends AppCompatActivity
 
         SearchManager searchManager = (SearchManager) acMain.this.getSystemService(Context.SEARCH_SERVICE);
 
-
         if (searchItem != null) {
+            searchItem.setVisible(R.id.nav_search != _actual_page);
             searchView = (SearchView) searchItem.getActionView();
         }
         if (searchView != null) {
             searchView.setSearchableInfo(searchManager.getSearchableInfo(acMain.this.getComponentName()));
-            setupSearchView(searchItem);
+            setupSearchView();
         }
         return super.onCreateOptionsMenu(menu);
     }
 
-    private void setupSearchView(final MenuItem searchItem) {
+    private void setupSearchView() {
 
-        //searchItem.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS );
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-                // TODO Auto-generated method stub
                 InputMethodManager imm = (InputMethodManager)searchView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
                 _actual_search.set_searchText(query);
                 _pages.setPageVisible(R.id.nav_result);
-                //Toast.makeText(searchView.getContext(), query, Toast.LENGTH_LONG).show();
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                // TODO Auto-generated method stub
-                //Toast.makeText(searchView.getContext(), newText, Toast.LENGTH_LONG).show();
                 return true;
             }
         });
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -133,6 +125,9 @@ public class acMain extends AppCompatActivity
         // Handle navigation view item clicks here.
         this._actual_page = item.getItemId();
         this._pages.setPageVisible(this._actual_page);
+
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer != null) {

@@ -7,9 +7,6 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -22,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.jonathan.decifraapp.R;
+import com.example.jonathan.decifraapp.entities.DatabaseController;
 import com.example.jonathan.decifraapp.entities.actual_music;
 import com.example.jonathan.decifraapp.entities.music;
 import com.example.jonathan.decifraapp.utils.page;
@@ -51,11 +49,11 @@ public class flSearch extends Fragment {
     private LinearLayout llPrincipal;
     private ListView lvSearchResult;
     private page _page = page.getInstance(null);
+    private DatabaseController _crud;
 
     public flSearch() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,8 +70,10 @@ public class flSearch extends Fragment {
         this._music = actual_music.getInstance();
 
         this.lvSearchResult.setOnItemClickListener(lvSearchResult_itemClick);
-        this.lvSearchResult.setOnLongClickListener(lvSearchResult_LongItemClick);
+        this.lvSearchResult.setOnItemLongClickListener(lvSearchResult_LongItemClick);
         setHasOptionsMenu(true);
+
+        _crud = new DatabaseController(v.getContext());
 
         return v;
     }
@@ -96,14 +96,32 @@ public class flSearch extends Fragment {
         }
     };
 
-
-    private View.OnLongClickListener lvSearchResult_LongItemClick = new View.OnLongClickListener() {
+    private AdapterView.OnItemLongClickListener lvSearchResult_LongItemClick = new AdapterView.OnItemLongClickListener() {
         @Override
-        public boolean onLongClick(View v) {
+        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            music _ms = (music) lvSearchResult.getItemAtPosition(position);
+            if ((_ms != null) && (validadeteSave(_ms.get_idApi()))) {
+
+                boolean nerr = _crud.insert(_ms.get_idApi(),
+                        _ms.get_name(),
+                        _ms.get_artist(),
+                        _ms.get_tab(),
+                        _ms.get_type());
+
+                Toast.makeText(v.getContext(), nerr ? "Salvo" : "Problema ao salvar cifra", Toast.LENGTH_SHORT).show();
+            }
 
             return false;
         }
     };
+
+    private boolean validadeteSave(String pIdApi) {
+        if (_crud.alreadyExists(pIdApi)) {
+            Toast.makeText(v.getContext(), "Cifra já salva", Toast.LENGTH_SHORT).show();
+            return  false;
+        }
+        return true;
+    }
 
     private View.OnClickListener btn_Search_Click = new View.OnClickListener() {
         @Override
@@ -130,7 +148,7 @@ public class flSearch extends Fragment {
                 }
             }
             else
-                Snackbar.make(v, "Digite uma música ou artista.", Snackbar.LENGTH_LONG)
+                Snackbar.make(v, "Digite uma música ou artista", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
         }
@@ -160,7 +178,7 @@ public class flSearch extends Fragment {
 
                 if (jsResponse.getBoolean("success") &&
                     jsResponse.getJSONArray("data").length() > 0) {
-
+                    StringBuilder sb;
                     ArrayList<music> contMusics = new ArrayList<>();
 
                     for (int i = 0; i < jsResponse.getJSONArray("data").length(); i++) {
@@ -175,17 +193,18 @@ public class flSearch extends Fragment {
 
                             JSONObject jsItemMusic = jsItem.getJSONArray("music").getJSONObject(music);
                             md.set_type(jsItemMusic.getString("type"));
-                            String content = "";
+                            sb = new StringBuilder();
 
                             for (int musicContent = 0; musicContent < jsItemMusic.getJSONArray("content").length(); musicContent++) {
-                                content +=  jsItemMusic.getJSONArray("content").get(musicContent) + "\n";
+                                sb.append(jsItemMusic.getJSONArray("content").get(musicContent));
+                                sb.append("\n");
                             }
-                            md.set_tab(content);
-
+                            md.set_tab(sb.toString());
 
                             contMusics.add(md);
                         }
                     }
+
                     lSearchItem _lSearchItem = new lSearchItem(v.getContext(), R.layout.l_search_item, contMusics);
 
                     lvSearchResult.setAdapter(_lSearchItem);
@@ -195,12 +214,12 @@ public class flSearch extends Fragment {
 
                 }
                 else {
-                    Snackbar.make(v, "Nenhuma Cifra encontrada.", Snackbar.LENGTH_LONG)
+                    Snackbar.make(v, "Nenhuma cifra encontrada", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
             }
             catch (JSONException e) {
-                Toast.makeText(v.getContext(), "Não foi possível carregar.",
+                Toast.makeText(v.getContext(), "Não foi possível carregar",
                         Toast.LENGTH_LONG).show();
             }
             finally {
@@ -222,7 +241,6 @@ public class flSearch extends Fragment {
             conn.setDoInput(true);
             conn.connect();
             is = conn.getInputStream();
-
 
             return inputStreamToString(is);
         } catch (Exception e) {

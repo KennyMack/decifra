@@ -11,7 +11,6 @@
 
 
     <ImageView
-        android:contentDescription="@string/l_music_item_descguitar"
         android:layout_width="0dp"
         android:layout_height="80dp"
         android:id="@+id/l_music_item_ivIcon"
@@ -20,6 +19,7 @@
 
     <LinearLayout
         android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -29,14 +29,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/l_music_item_lblMusicName"
-            android:layout_weight="1"
-            android:text="Music"/>
+            android:layout_weight="1"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/l_music_item_lblArtist"
-            android:layout_weight="1"
-            android:text="artist"/>
+            android:layout_weight="1"/>
     </LinearLayout>
 
 

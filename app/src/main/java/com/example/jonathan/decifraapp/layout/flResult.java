@@ -43,7 +43,6 @@ public class flResult extends Fragment {
     private ProgressBar ivWaitIcon;
     private ListView lvSearchResult;
     private page _page = page.getInstance(null);
-    private lSearchItem _lSearchItem;
 
     public flResult() {
         // Required empty public constructor
@@ -152,10 +151,12 @@ public class flResult extends Fragment {
             try {
                 jsResponse = new JSONObject(result);
 
+
                 if (jsResponse.getBoolean("success") &&
                         jsResponse.getJSONArray("data").length() > 0) {
+                    StringBuilder sb;
 
-                    ArrayList<music> contMusics = new ArrayList<music>();
+                    ArrayList<music> contMusics = new ArrayList<>();
 
                     for (int i = 0; i < jsResponse.getJSONArray("data").length(); i++) {
                         JSONObject jsItem = jsResponse.getJSONArray("data").getJSONObject(i);
@@ -163,25 +164,25 @@ public class flResult extends Fragment {
                         for (int music = 0; music < jsItem.getJSONArray("music").length(); music++) {
 
                             music md = new music();
-                            //TODO: Mudar para get_idAPi
-                            md.set_id(jsItem.getString("_id"));
+                            md.set_idApi(jsItem.getString("_id"));
                             md.set_name(jsItem.getString("name"));
                             md.set_artist(jsItem.getString("artist"));
 
                             JSONObject jsItemMusic = jsItem.getJSONArray("music").getJSONObject(music);
                             md.set_type(jsItemMusic.getString("type"));
-                            String content = "";
+                            sb = new StringBuilder();
 
                             for (int musicContent = 0; musicContent < jsItemMusic.getJSONArray("content").length(); musicContent++) {
-                                content +=  jsItemMusic.getJSONArray("content").get(musicContent) + "\n";
+                                sb.append(jsItemMusic.getJSONArray("content").get(musicContent));
+                                sb.append("\n");
                             }
-                            md.set_tab(content);
+                            md.set_tab(sb.toString());
 
 
                             contMusics.add(md);
                         }
                     }
-                    _lSearchItem = new lSearchItem(v.getContext(), R.layout.l_search_item, contMusics);
+                    lSearchItem _lSearchItem = new lSearchItem(v.getContext(), R.layout.l_search_item, contMusics);
 
                     lvSearchResult.setAdapter(_lSearchItem);
 
@@ -200,7 +201,6 @@ public class flResult extends Fragment {
             }
             finally {
                 ivWaitIcon.setVisibility(View.INVISIBLE);
-                jsResponse = null;
             }
         }
     }
@@ -237,7 +237,8 @@ public class flResult extends Fragment {
         String line;
         try {
             while ((line = reader.readLine()) != null) {
-                sb.append((line + "\n"));
+                sb.append(line);
+                sb.append("\n");
             }
         } catch (IOException e) {
             e.printStackTrace();

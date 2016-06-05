@@ -23,14 +23,14 @@ public class DatabaseController {
 
         db = createDb.getWritableDatabase();
         values = new ContentValues();
-        values.put(createDb.getIDAPI(), idApi);
-        values.put(createDb.getNAME(), name);
-        values.put(createDb.getARTIST(), artist);
-        values.put(createDb.getTAB(), tab);
-        values.put(createDb.getTYPE(), type);
+        values.put(CreateDatabase.getIDAPI(), idApi);
+        values.put(CreateDatabase.getNAME(), name);
+        values.put(CreateDatabase.getARTIST(), artist);
+        values.put(CreateDatabase.getTAB(), tab);
+        values.put(CreateDatabase.getTYPE(), type);
 
         try {
-            insertResult = db.insert(createDb.getTABLE(), null, values);
+            insertResult = db.insert(CreateDatabase.getTABLE(), null, values);
 
             if (insertResult == -1)
                 result = false;
@@ -50,15 +50,15 @@ public class DatabaseController {
     public Cursor loadCipher(){
         Cursor cursor;
         String[] campos =  {
-                createDb.getID(),
-                createDb.getIDAPI(),
-                createDb.getNAME(),
-                createDb.getARTIST(),
-                createDb.getTAB(),
-                createDb.getTYPE()
+                CreateDatabase.getID(),
+                CreateDatabase.getIDAPI(),
+                CreateDatabase.getNAME(),
+                CreateDatabase.getARTIST(),
+                CreateDatabase.getTAB(),
+                CreateDatabase.getTYPE()
         };
         db = createDb.getReadableDatabase();
-        cursor = db.query(createDb.getTABLE(), campos, null, null, null, null, null, null);
+        cursor = db.query(CreateDatabase.getTABLE(), campos, null, null, null, null, null, null);
 
         if (cursor != null) {
             cursor.moveToFirst();
@@ -70,14 +70,11 @@ public class DatabaseController {
     public Boolean alreadyExists(String idApi)
     {
         Boolean result;
-        String query = "Select * from " + createDb.getTABLE() +
-                       " where " + createDb.getIDAPI() + " = '" + idApi + "'";
+        String query = "Select * from " + CreateDatabase.getTABLE() +
+                       " where " + CreateDatabase.getIDAPI() + " = '" + idApi + "'";
 
         Cursor cursor = createDb.getReadableDatabase().rawQuery(query, null);
-        if (cursor.getCount() <= 0)
-            result = false;
-        else
-            result = true;
+        result = cursor.getCount() > 0;
 
         cursor.close();
 
@@ -89,7 +86,7 @@ public class DatabaseController {
         boolean result = true;
         db = createDb.getWritableDatabase();
         try {
-            db.delete(createDb.getTABLE(), createDb.getID() + " = " + id, null);
+            db.delete(CreateDatabase.getTABLE(), CreateDatabase.getID() + " = " + id, null);
         }
         catch (Exception e) {
             e.printStackTrace();

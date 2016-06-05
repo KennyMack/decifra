@@ -17,7 +17,7 @@
             android:visibility="visible">
             <EditText
                 android:paddingTop="20dp"
-                android:inputType="textUri"
+                android:inputType="textAutoComplete"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:id="@+id/fl_search_txtArtist"
@@ -27,7 +27,7 @@
 
             <EditText
                 android:paddingTop="20dp"
-                android:inputType="textUri"
+                android:inputType="textAutoComplete"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:id="@+id/fl_search_txtMusic"
