@@ -36,7 +36,6 @@ public class flMyCiphers extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_fl_my_ciphers, container, false);
 
         CreateDatabase createDb = new CreateDatabase(v.getContext());
@@ -45,8 +44,6 @@ public class flMyCiphers extends Fragment {
 
         lstDados = (ListView)v.findViewById(R.id.fl_my_ciphers_lvCiphers);
         lstDados.setOnItemClickListener(lvMyCiphers_itemClick);
-
-
         ArrayList<music> contMusics = new ArrayList<music>();
         while (cur.moveToNext()) {
             music novo = new music();
