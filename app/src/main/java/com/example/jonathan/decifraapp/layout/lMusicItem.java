@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,6 +60,7 @@ public class lMusicItem extends ArrayAdapter<music> {
         viewHolder.lblId.setTag(_music.get_id());
         viewHolder.lblNameMusic.setText(_music.get_name());
         viewHolder.lblNameArtist.setText(_music.get_artist());
+
 
         return convertView;
 

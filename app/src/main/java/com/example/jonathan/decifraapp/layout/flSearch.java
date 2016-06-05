@@ -95,13 +95,11 @@ public class flSearch extends Fragment {
             music _ms = (music) lvSearchResult.getItemAtPosition(position);
 
             if (_ms != null) {
-
-                actual_music acMusic = actual_music.getInstance();
-                acMusic.set_artist(_ms.get_artist());
-                acMusic.set_name(_ms.get_name());
-                acMusic.set_tab(_ms.get_tab());
-                acMusic.set_id(_ms.get_id());
-                acMusic.set_type(_ms.get_artist());
+                _music.set_artist(_ms.get_artist());
+                _music.set_name(_ms.get_name());
+                _music.set_tab(_ms.get_tab());
+                _music.set_id(_ms.get_id());
+                _music.set_type(_ms.get_type());
 
                 goToCipher();
             }
@@ -160,7 +158,7 @@ public class flSearch extends Fragment {
             try {
                 return downloadContent(params[0]);
             } catch (IOException e) {
-                return e.getMessage();
+                return "{ \"success\": false, \"data\":[]  }";
             }
 
         }
@@ -178,17 +176,26 @@ public class flSearch extends Fragment {
                     ArrayList<music> contMusics = new ArrayList<music>();
 
                     for (int i = 0; i < jsResponse.getJSONArray("data").length(); i++) {
-
                         JSONObject jsItem = jsResponse.getJSONArray("data").getJSONObject(i);
-                        music md = new music();
-                        md.set_id(jsItem.getString("_id"));
-                        md.set_name(jsItem.getString("name"));
-                        md.set_artist(jsItem.getString("artist"));
 
                         for (int music = 0; music < jsItem.getJSONArray("music").length(); music++) {
+
+                            music md = new music();
+                            //TODO: Mudar para get_idAPi
+                            md.set_id(jsItem.getString("_id"));
+                            md.set_name(jsItem.getString("name"));
+                            md.set_artist(jsItem.getString("artist"));
+
                             JSONObject jsItemMusic = jsItem.getJSONArray("music").getJSONObject(music);
                             md.set_type(jsItemMusic.getString("type"));
-                            md.set_tab(jsItemMusic.getString("content"));
+                            String content = "";
+
+                            for (int musicContent = 0; musicContent < jsItemMusic.getJSONArray("content").length(); musicContent++) {
+                                content +=  jsItemMusic.getJSONArray("content").get(musicContent) + "\n";
+                            }
+                            md.set_tab(content);
+
+
                             contMusics.add(md);
                         }
                     }
@@ -201,26 +208,21 @@ public class flSearch extends Fragment {
 
                 }
                 else {
-                    llPrincipal.setVisibility(View.VISIBLE);
-                    ivWaitIcon.setVisibility(View.INVISIBLE);
                     Snackbar.make(v, "Nenhuma Cifra encontrada.", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
             }
             catch (JSONException e) {
-                Toast.makeText(v.getContext(), "Não foi possível carregar. Tente novament",
+                Toast.makeText(v.getContext(), "Não foi possível carregar. Tente novamente",
                         Toast.LENGTH_LONG).show();
             }
             finally {
+                llPrincipal.setVisibility(View.VISIBLE);
+                ivWaitIcon.setVisibility(View.INVISIBLE);
                 jsResponse = null;
             }
         }
     }
-
-
-
-
-
 
     private String downloadContent(String purl) throws IOException {
         InputStream is = null;

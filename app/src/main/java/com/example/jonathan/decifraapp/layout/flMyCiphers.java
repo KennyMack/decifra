@@ -34,27 +34,13 @@ public class flMyCiphers extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_fl_my_ciphers, container, false);
 
         CreateDatabase createDb = new CreateDatabase(v.getContext());
         DatabaseController db = new DatabaseController(v.getContext());
         Cursor cur = db.carregaDados();
 
-        /*String[] fieldNames = new String[] { createDb.getID(), createDb.getNAME(), createDb.getARTIST() };
-        int[] idViews = new int[] { R.id.l_music_item_lblMusicName, R.id.l_music_item_lblArtist };
-
-        SimpleCursorAdapter curAdapter =
-                new SimpleCursorAdapter(
-                        v.getContext(),
-                        R.layout.l_music_item,
-                        cur,
-                        fieldNames,
-                        idViews,
-                        0);
-        */
         lstDados = (ListView)v.findViewById(R.id.fl_my_ciphers_lvCiphers);
-        //lstDados.setAdapter(curAdapter);
         ArrayList<music> contMusics = new ArrayList<music>();
         while (cur.moveToNext()) {
             music novo = new music();
@@ -66,26 +52,6 @@ public class flMyCiphers extends Fragment {
             novo.set_type(cur.getString(5));
             contMusics.add(novo);
         }
-        /*
-        music md1 = new music();
-        md1.set_id("1");
-        md1.set_name("music 1");
-        md1.set_artist("Artist 1");
-
-        music md2 = new music();
-        md2.set_id("2");
-        md2.set_name("music 2");
-        md2.set_artist("Artist 2");
-
-        music md3 = new music();
-        md3.set_id("3");
-        md3.set_name("music 3");
-        md3.set_artist("Artist 3");
-
-        contMusics.add(md1);
-        contMusics.add(md2);
-        contMusics.add(md3);
-        */
         _lMusicItem = new lMusicItem(v.getContext(), R.layout.l_music_item, contMusics);
         lstDados.setOnItemLongClickListener(llmusicitem_LongClick);
         lstDados.setAdapter(_lMusicItem);
