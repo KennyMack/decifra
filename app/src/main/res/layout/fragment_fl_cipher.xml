@@ -43,6 +43,7 @@
                 android:layout_height="wrap_content"
                 android:paddingRight="20dp"
                 android:paddingLeft="20dp"
+                android:inputType="textMultiLine"
                 android:layout_weight="1.0"/>
         </ScrollView>
     </LinearLayout>

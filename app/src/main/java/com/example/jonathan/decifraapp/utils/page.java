@@ -34,21 +34,30 @@ public class page {
 
         if (page == R.id.nav_home){
             flHome _flhome = new flHome();
+            //ftPage.add(_flhome, "Home");
+            //ftPage.addToBackStack("Home");
             ftPage.replace(R.id.flPrincipal, _flhome);
         }
         else if (page == R.id.nav_my_ciphers) {
             flMyCiphers _flmyciphers = new flMyCiphers();
+            //ftPage.add(_flmyciphers, "MyCiphers");
+            //ftPage.addToBackStack("MyCiphers");
             ftPage.replace(R.id.flPrincipal, _flmyciphers);
         }
         else if (page == R.id.nav_search) {
             flSearch _flsearch = new flSearch();
             ftPage.replace(R.id.flPrincipal, _flsearch);
+            //ftPage.add(_flsearch, "Search");
+            //ftPage.addToBackStack("Search");
         }
         else if (page == R.id.nav_cipher) {
             flCipher _flcipher = new flCipher();
             ftPage.replace(R.id.flPrincipal, _flcipher);
+            //ftPage.add(_flcipher, "Cipher");
+            //ftPage.addToBackStack("Cipher");
         }
-        ftPage.commit();
+        //ftPage.commit();
+        ftPage.commitAllowingStateLoss();
     }
 
 }
