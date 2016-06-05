@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +24,7 @@ public class lSearchItem extends ArrayAdapter<music> {
         LinearLayout lblId;
         TextView lblNameMusic;
         TextView lblNameArtist;
+        ImageView ivIconType;
 
     }
 
@@ -46,6 +48,7 @@ public class lSearchItem extends ArrayAdapter<music> {
 
         convertView = _liInflater.inflate(R.layout.l_search_item, parent, false);
 
+        viewHolder.ivIconType = (ImageView) convertView.findViewById(R.id.l_search_item_ivIcon);
         viewHolder.lblId = (LinearLayout) convertView.findViewById(R.id.l_search_item_llsearchitem);
         viewHolder.lblNameMusic = (TextView) convertView.findViewById(R.id.l_search_item_lblMusicName);
         viewHolder.lblNameArtist = (TextView) convertView.findViewById(R.id.l_search_item_lblArtist);
@@ -60,6 +63,21 @@ public class lSearchItem extends ArrayAdapter<music> {
         viewHolder.lblId.setTag(_music.get_id());
         viewHolder.lblNameMusic.setText(_music.get_name());
         viewHolder.lblNameArtist.setText(_music.get_artist());
+
+        switch (_music.get_type())
+        {
+            case "acousticguitar":
+                viewHolder.ivIconType.setImageResource(R.mipmap.ic_acoustic_guitar);
+                break;
+            case "bass":
+                viewHolder.ivIconType.setImageResource(R.mipmap.ic_bass);
+                break;
+            case "guitar":
+                viewHolder.ivIconType.setImageResource(R.mipmap.ic_guitar);
+                break;
+        }
+
+
 
         return convertView;
 

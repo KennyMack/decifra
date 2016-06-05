@@ -7,6 +7,7 @@ public class actual_music {
     private static actual_music _instance = null;
 
     private String _id;
+    private String _idApi;
     private String _type;
     private String _name;
     private String _artist;
@@ -29,6 +30,14 @@ public class actual_music {
 
     public void set_id(String _id) {
         this._id = _id;
+    }
+
+    public String get_idApi() {
+        return _idApi;
+    }
+
+    public void set_idApi(String _idApi) {
+        this._idApi = _idApi;
     }
 
     public String get_type() {

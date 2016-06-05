@@ -11,10 +11,9 @@
 
 
     <ImageView
-        android:contentDescription="icone de musica"
+        android:contentDescription="@string/l_music_item_descguitar"
         android:layout_width="0dp"
         android:layout_height="80dp"
-        android:src="@android:drawable/sym_def_app_icon"
         android:id="@+id/l_music_item_ivIcon"
         android:layout_weight="1"
         />
