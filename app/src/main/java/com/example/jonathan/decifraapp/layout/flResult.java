@@ -73,7 +73,6 @@ public class flResult extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // TODO Add your menu entries here
         inflater.inflate(R.menu.ac_main, menu);
 
         super.onCreateOptionsMenu(menu, inflater);

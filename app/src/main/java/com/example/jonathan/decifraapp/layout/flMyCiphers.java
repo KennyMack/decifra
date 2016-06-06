@@ -44,6 +44,8 @@ public class flMyCiphers extends Fragment {
 
         lstDados = (ListView)v.findViewById(R.id.fl_my_ciphers_lvCiphers);
         lstDados.setOnItemClickListener(lvMyCiphers_itemClick);
+        lstDados.setOnItemLongClickListener(llmusicitem_LongClick);
+
         ArrayList<music> contMusics = new ArrayList<>();
         boolean found = false;
         while (cur.moveToNext()) {
@@ -59,7 +61,7 @@ public class flMyCiphers extends Fragment {
         }
 
         _lMusicItem = new lMusicItem(v.getContext(), R.layout.l_music_item, contMusics);
-        lstDados.setOnItemLongClickListener(llmusicitem_LongClick);
+
         lstDados.setAdapter(_lMusicItem);
 
         if (!found)
