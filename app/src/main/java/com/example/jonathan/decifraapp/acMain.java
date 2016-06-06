@@ -45,7 +45,7 @@ public class acMain extends AppCompatActivity
         if (navigationView != null)
             navigationView.setNavigationItemSelectedListener(this);
 
-        this._actual_page = R.id.nav_home;
+        this._actual_page = R.id.nav_my_ciphers;
         this._pages.setPageVisible(this._actual_page);
     }
 

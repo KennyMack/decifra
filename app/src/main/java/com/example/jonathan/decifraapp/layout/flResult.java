@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.jonathan.decifraapp.R;
+import com.example.jonathan.decifraapp.entities.DatabaseController;
 import com.example.jonathan.decifraapp.entities.actual_music;
 import com.example.jonathan.decifraapp.entities.actual_search;
 import com.example.jonathan.decifraapp.entities.music;
@@ -43,6 +44,7 @@ public class flResult extends Fragment {
     private ProgressBar ivWaitIcon;
     private ListView lvSearchResult;
     private page _page = page.getInstance(null);
+    private DatabaseController _crud;
 
     public flResult() {
         // Required empty public constructor
@@ -62,12 +64,13 @@ public class flResult extends Fragment {
         this.lvSearchResult = (ListView) v.findViewById(R.id.fl_result_lvSearchResult);
 
         this.lvSearchResult.setOnItemClickListener(lvSearchResult_itemClick);
-        this.lvSearchResult.setOnLongClickListener(lvSearchResult_LongItemClick);
+        this.lvSearchResult.setOnItemLongClickListener(lvSearchResult_LongItemClick);
 
         ivWaitIcon.setVisibility(View.VISIBLE);
 
         new DownloadTask().execute(getString(R.string.app_URL) + "all/artist/" + this._actual_search.get_searchText() + "/music/" + this._actual_search.get_searchText());
 
+        _crud = new DatabaseController(v.getContext());
         return v;
     }
 
@@ -81,9 +84,6 @@ public class flResult extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.nav_home:
-                // Not implemented here
-                return false;
             case R.id.nav_my_ciphers:
                 // Do Fragment menu item stuff here
                 return false;
@@ -111,6 +111,7 @@ public class flResult extends Fragment {
                 _music.set_name(_ms.get_name());
                 _music.set_tab(_ms.get_tab());
                 _music.set_id(_ms.get_id());
+                _music.set_idApi(_ms.get_idApi());
                 _music.set_type(_ms.get_type());
 
                 goToCipher();
@@ -118,14 +119,31 @@ public class flResult extends Fragment {
         }
     };
 
-    private View.OnLongClickListener lvSearchResult_LongItemClick = new View.OnLongClickListener() {
+    AdapterView.OnItemLongClickListener lvSearchResult_LongItemClick = new AdapterView.OnItemLongClickListener() {
         @Override
-        public boolean onLongClick(View v) {
+        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            music _ms = (music) lvSearchResult.getItemAtPosition(position);
+            if ((_ms != null) && (validadeteSave(_ms.get_idApi()))) {
 
-            Toast.makeText(v.getContext(), "Salvar cifra", Toast.LENGTH_LONG).show();
+                boolean nerr = _crud.insert(_ms.get_idApi(),
+                        _ms.get_name(),
+                        _ms.get_artist(),
+                        _ms.get_tab(),
+                        _ms.get_type());
+
+                Toast.makeText(v.getContext(), nerr ? "Salvo" : "Problema ao salvar cifra", Toast.LENGTH_SHORT).show();
+            }
             return false;
         }
     };
+
+    private boolean validadeteSave(String pIdApi) {
+        if (_crud.alreadyExists(pIdApi)) {
+            Toast.makeText(v.getContext(), "Cifra já salva", Toast.LENGTH_SHORT).show();
+            return  false;
+        }
+        return true;
+    }
 
     private void goToCipher() {
         _page.setPageVisible(R.id.nav_cipher);

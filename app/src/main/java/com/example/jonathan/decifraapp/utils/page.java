@@ -2,13 +2,9 @@ package com.example.jonathan.decifraapp.utils;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Context;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.FrameLayout;
 
 import com.example.jonathan.decifraapp.R;
 import com.example.jonathan.decifraapp.layout.flCipher;
-import com.example.jonathan.decifraapp.layout.flHome;
 import com.example.jonathan.decifraapp.layout.flMyCiphers;
 import com.example.jonathan.decifraapp.layout.flResult;
 import com.example.jonathan.decifraapp.layout.flSearch;
@@ -35,13 +31,7 @@ public class page {
     public void setPageVisible(int page) {
         FragmentTransaction ftPage = _fmPrincipal.beginTransaction();
 
-        if (page == R.id.nav_home){
-            flHome _flhome = new flHome();
-            //ftPage.add(_flhome, "Home");
-            //ftPage.addToBackStack("Home");
-            ftPage.replace(R.id.flPrincipal, _flhome);
-        }
-        else if (page == R.id.nav_my_ciphers) {
+        if (page == R.id.nav_my_ciphers) {
             flMyCiphers _flmyciphers = new flMyCiphers();
             //ftPage.add(_flmyciphers, "MyCiphers");
             //ftPage.addToBackStack("MyCiphers");
