@@ -21,6 +21,7 @@ public class page {
 
     public void setPageVisible(int page) {
         FragmentTransaction ftPage = _fmPrincipal.beginTransaction();
+        ftPage.setCustomAnimations(R.animator.fade_in, R.animator.fade_out);
 
         if (page == R.id.nav_my_ciphers) {
             flMyCiphers _flmyciphers = new flMyCiphers();

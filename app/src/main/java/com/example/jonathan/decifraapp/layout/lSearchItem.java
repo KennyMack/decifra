@@ -34,6 +34,7 @@ public class lSearchItem extends ArrayAdapter<music> {
         music _music = getItem(position);
         ViewHolder viewHolder;
 
+        // inexplicable error using the holder
         //if (convertView == null) {
 
         viewHolder = new ViewHolder();

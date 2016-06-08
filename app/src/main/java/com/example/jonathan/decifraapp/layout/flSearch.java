@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.design.widget.Snackbar;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,6 +62,7 @@ public class flSearch extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_fl_search, container, false);
+
         _page = new page(getFragmentManager());
         this.txtArtist = (EditText) v.findViewById(R.id.fl_search_txtArtist);
         this.txtMusic  = (EditText) v.findViewById(R.id.fl_search_txtMusic);

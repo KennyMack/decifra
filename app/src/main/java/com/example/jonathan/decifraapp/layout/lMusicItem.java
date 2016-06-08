@@ -36,6 +36,8 @@ public class lMusicItem extends ArrayAdapter<music> {
         music _music = getItem(position);
         ViewHolder viewHolder;
 
+        // inexplicable error using the holder
+        //if (convertView == null) {
 
         viewHolder = new ViewHolder();
 
@@ -49,6 +51,11 @@ public class lMusicItem extends ArrayAdapter<music> {
         viewHolder.lblNameArtist = (TextView) convertView.findViewById(R.id.l_music_item_lblArtist);
 
         convertView.setTag(viewHolder);
+
+        //} else {
+
+        //viewHolder = (ViewHolder) convertView.getTag();
+        //}
 
         viewHolder.lblId.setTag(_music.get_id());
         viewHolder.lblNameMusic.setText(_music.get_name());

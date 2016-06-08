@@ -9,7 +9,6 @@
 
     <string name="action_save_cipher">Salvar Cifra</string>
 
-    <string name="menu_home">Home</string>
     <string name="menu_search">Buscar Cifras</string>
     <string name="menu_my_ciphers">Minhas Cifras</string>
 
@@ -26,7 +25,4 @@
     <string name="l_music_item_descguitar">Icone de guitarra</string>
     <string name="l_music_item_descbass">Icone de baixo</string>
     <string name="l_music_item_descacoustguitar">Icone de violão</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

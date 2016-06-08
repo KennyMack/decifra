@@ -58,8 +58,6 @@ public class acMain extends AppCompatActivity
             if (drawer.isDrawerOpen(GravityCompat.START)) {
                 drawer.closeDrawer(GravityCompat.START);
             } else {
-
-
                 super.onBackPressed();
             }
         }
@@ -115,7 +113,6 @@ public class acMain extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.ac_main_save_cipher) {
-            //Toast.makeText(this, "Salvar", Toast.LENGTH_LONG).show();
             return false;
         }
 
