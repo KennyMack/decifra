@@ -14,17 +14,8 @@ import com.example.jonathan.decifraapp.layout.flSearch;
  */
 public class page {
     private FragmentManager _fmPrincipal;
-    private static page _instance = null;
 
-    public static page getInstance(FragmentManager fm){
-        if (_instance == null) {
-            _instance = new page(fm);
-        }
-
-        return _instance;
-    }
-
-    private page(FragmentManager fm){
+    public page(FragmentManager fm){
         _fmPrincipal = fm;
     }
 
@@ -55,7 +46,6 @@ public class page {
             //ftPage.add(_flcipher, "Cipher");
             //ftPage.addToBackStack("Cipher");
         }
-        //ftPage.commit();
         ftPage.commitAllowingStateLoss();
 
     }

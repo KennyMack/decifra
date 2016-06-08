@@ -67,11 +67,12 @@ public class DatabaseController {
         return cursor;
     }
 
-    public Boolean alreadyExists(String idApi)
+    public Boolean alreadyExists(String idApi, String typeTab)
     {
         Boolean result;
         String query = "Select * from " + CreateDatabase.getTABLE() +
-                       " where " + CreateDatabase.getIDAPI() + " = '" + idApi + "'";
+                       " where " + CreateDatabase.getIDAPI() + " = '" + idApi + "'" +
+                       "   and " + CreateDatabase.getTYPE() + " = '" + typeTab + "'";
 
         Cursor cursor = createDb.getReadableDatabase().rawQuery(query, null);
         result = cursor.getCount() > 0;

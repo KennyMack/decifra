@@ -60,7 +60,7 @@ public class flCipher extends Fragment {
             case R.id.ac_main_save_cipher:
                 DatabaseController crud = new DatabaseController(v.getContext());
 
-                if (!crud.alreadyExists(_music.get_idApi())) {
+                if (!crud.alreadyExists(_music.get_idApi(), _music.get_type())) {
 
                     if (crud.insert(_music.get_idApi(),
                                     _music.get_name(),

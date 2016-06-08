@@ -21,7 +21,7 @@ import com.example.jonathan.decifraapp.utils.page;
 public class acMain extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private page _pages = page.getInstance(getFragmentManager());
+    private page _pages;
     private actual_search _actual_search = actual_search.getInstance();
     private int _actual_page;
     private SearchView searchView = null;
@@ -29,6 +29,7 @@ public class acMain extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        _pages = new page(getFragmentManager());
         setContentView(R.layout.activity_ac_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 

@@ -48,7 +48,7 @@ public class flSearch extends Fragment {
     private ProgressBar ivWaitIcon;
     private LinearLayout llPrincipal;
     private ListView lvSearchResult;
-    private page _page = page.getInstance(null);
+    private page _page;
     private DatabaseController _crud;
 
     public flSearch() {
@@ -60,6 +60,7 @@ public class flSearch extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_fl_search, container, false);
+        _page = new page(getFragmentManager());
         this.txtArtist = (EditText) v.findViewById(R.id.fl_search_txtArtist);
         this.txtMusic  = (EditText) v.findViewById(R.id.fl_search_txtMusic);
         Button btnSearch = (Button) v.findViewById(R.id.fl_search_btnSearch);
@@ -91,6 +92,7 @@ public class flSearch extends Fragment {
                 _music.set_idApi(_ms.get_idApi());
                 _music.set_type(_ms.get_type());
 
+
                 goToCipher();
             }
         }
@@ -100,7 +102,7 @@ public class flSearch extends Fragment {
         @Override
         public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
             music _ms = (music) lvSearchResult.getItemAtPosition(position);
-            if ((_ms != null) && (validadeteSave(_ms.get_idApi()))) {
+            if ((_ms != null) && (validadeteSave(_ms.get_idApi(), _ms.get_type()))) {
 
                 boolean nerr = _crud.insert(_ms.get_idApi(),
                         _ms.get_name(),
@@ -115,8 +117,8 @@ public class flSearch extends Fragment {
         }
     };
 
-    private boolean validadeteSave(String pIdApi) {
-        if (_crud.alreadyExists(pIdApi)) {
+    private boolean validadeteSave(String pIdApi, String pTypeTab) {
+        if (_crud.alreadyExists(pIdApi, pTypeTab)) {
             Toast.makeText(v.getContext(), "Cifra já salva", Toast.LENGTH_SHORT).show();
             return  false;
         }

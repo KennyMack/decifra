@@ -27,7 +27,7 @@ public class flMyCiphers extends Fragment {
     private lMusicItem _lMusicItem;
     private ListView lstDados;
     private View v;
-    private page _page = page.getInstance(null);
+    private page _page;
 
     public flMyCiphers() {
         // Required empty public constructor
@@ -38,6 +38,7 @@ public class flMyCiphers extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_fl_my_ciphers, container, false);
+        _page = new page(getFragmentManager());
 
         DatabaseController db = new DatabaseController(v.getContext());
         Cursor cur = db.loadCipher();
